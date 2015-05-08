@@ -10,6 +10,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.WebSocket;
 import scala.Option;
+import kamon.Kamon;
 
 
 /**
@@ -24,6 +25,7 @@ public class Application extends Controller {
     public static WebSocket<JsonNode> ws() {
         return new WebSocket<JsonNode>() {
             public void onReady(final WebSocket.In<JsonNode> in, final WebSocket.Out<JsonNode> out) {
+   //             Kamon.start(); //I think this is early enough to start the monitoring
                 // create a new UserActor and give it the default stocks to watch
                 final ActorRef userActor = Akka.system().actorOf(Props.create(UserActor.class, out));
                 
